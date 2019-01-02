@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomHorizontalScroll">
+        <attr name="fontSize" format="float"/>
+        <attr name="backGroundColor" format="color"/>
+        <attr name="textColor" format="color"/>
+        <attr name="indicatorColor" format="color"/>
+        <attr name="canLines" format="boolean"/>
+        <attr name="indicatorDrawable" format="reference"/>
+        <attr name="contentPaddingTop" format="dimension"/>
+        <attr name="contentPaddingBottom" format="dimension"/>
+        <attr name="contentPaddingLeft" format="dimension"/>
+        <attr name="contentPaddingRight" format="dimension"/>
+        <attr name="indicatorMarginTop" format="dimension"/>
+        <attr name="separateContentAndIndicator" format="boolean"/>
+        <attr name="indicatorParentColor" format="color"/>
+        <attr name="selectTxtBgColor" format="color"/>
+        <attr name="normalTxtBgColor" format="color"/>
+        <attr name="goneIndicator" format="boolean"/>
+    </declare-styleable>
+</resources>
