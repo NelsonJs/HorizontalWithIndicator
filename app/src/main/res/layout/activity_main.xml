@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".MainActivity">
-
-
-
-</android.support.constraint.ConstraintLayout>
+    <nelson.com.myhorizontal.PHorizontalView
+        app:fontSize="14"
+        app:textColor="@color/gray"
+        app:indicatorColor="@color/e5"
+        app:canLines="true"
+        app:indicatorDrawable="@drawable/indicator_normal"
+        app:backGroundColor="@color/colorAccent"
+        app:contentPaddingTop="10dp"
+        app:contentPaddingBottom="20dp"
+        app:indicatorMarginTop="2dp"
+        app:separateContentAndIndicator="true"
+        app:indicatorParentColor="@color/colorPrimaryDark"
+        app:contentPaddingLeft="40dp"
+        app:contentPaddingRight="40dp"
+        app:selectTxtBgColor="@color/green"
+        app:normalTxtBgColor="@color/yaMa"
+        app:goneIndicator="false"
+        android:id="@+id/scro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_below="@id/scro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</RelativeLayout>

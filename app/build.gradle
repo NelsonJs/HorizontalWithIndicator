@@ -1,8 +1,9 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
     defaultConfig {
+        applicationId "nelson.com.myhorizontal"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
