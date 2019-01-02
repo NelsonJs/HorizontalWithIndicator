@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import nelson.com.horizontallibrary.PHorizontalView;
+
 public class MainActivity extends AppCompatActivity {
     List<String> data = new ArrayList<>();
     private List<View> imageViews = new ArrayList<>();
@@ -28,24 +30,22 @@ public class MainActivity extends AppCompatActivity {
         imageViews.add(view2);
         Log.i("nelson","CustomHorizontalScroll");
         List<String> list = new ArrayList<>();
-        // list.add("Item-1");
-        list.add("Item-222222");
+         list.add("Item-1");
+        list.add("Item-2");
         list.add("Item-3");
         ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new A());
-        PHorizontalView scroll = findViewById(R.id.scro);
-        scroll.bindTitles(list).bindVp(viewPager);
-        scroll.setOnPageChangeListener(new PHorizontalView.OnPageChangeListener() {
-            @Override
-            public void onPageChange(int position) {
-                Log.i("nelson","onPageChange------------>"+position);
-            }
+        PHorizontalView pHorizontalView = findViewById(R.id.scro);
+        pHorizontalView.bindTitles(list);
+        pHorizontalView.bindVp(viewPager);
+        pHorizontalView.setOnPageChangeListener(new PHorizontalView.OnPageChangeListener() {
 
             @Override
             public void onSelected(int position) {
-                Log.i("nelson","onSelected------------>"+position);
+
             }
         });
+
     }
 
     class A extends PagerAdapter {

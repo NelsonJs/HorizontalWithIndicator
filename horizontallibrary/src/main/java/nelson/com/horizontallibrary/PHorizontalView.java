@@ -1,4 +1,4 @@
-package nelson.com.myhorizontal;
+package nelson.com.horizontallibrary;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
+
 
 public class PHorizontalView extends ViewGroup {
     private Context mContext;
@@ -44,6 +45,15 @@ public class PHorizontalView extends ViewGroup {
     private int selectTxtBgColor;
     private int normalTxtBgColor;
     private boolean goneIndicator;
+    private float verticalLineWidth;
+    private int titlePaddingTop;
+    private int titlePaddingBottom;
+    private int titlePaddingLeft;
+    private int titlePaddingRight;
+    private Drawable outDrawable;
+    private int selectTxtColor;
+    private float selectFontSize;
+
     public PHorizontalView(Context context) {
         this(context, null);
     }
@@ -62,16 +72,25 @@ public class PHorizontalView extends ViewGroup {
         indicatorColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_indicatorColor, Color.BLACK);
         canLines = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_canLines, false);
         indicatorDrawable = typedArray.getDrawable(R.styleable.CustomHorizontalScroll_indicatorDrawable);
+        outDrawable = typedArray.getDrawable(R.styleable.CustomHorizontalScroll_outDrawable);
         contentPaddingTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingTop, 0);
         contentPaddingBottom = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingBottom, 0);
+        contentPaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingLeft, 0);
+        contentPaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingRight, 0);
+        selectFontSize = typedArray.getFloat(R.styleable.CustomHorizontalScroll_selectFontSize, 0);
+        titlePaddingTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingTop, 0);
+        titlePaddingBottom = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingBottom, 0);
+        titlePaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingLeft, 0);
+        titlePaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingRight, 0);
+
         indicatorMarginTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_indicatorMarginTop, 0);
         separateContentAndIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_separateContentAndIndicator, false);
         indicatorParentColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_indicatorParentColor, Color.WHITE);
-        contentPaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingLeft, 0);
-        contentPaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingRight, 0);
-        selectTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtBgColor, Color.BLACK);
-        normalTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_normalTxtBgColor, Color.BLACK);
+        selectTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtBgColor, Color.WHITE);
+        normalTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_normalTxtBgColor, Color.WHITE);
         goneIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_goneIndicator, false);
+        verticalLineWidth = typedArray.getDimension(R.styleable.CustomHorizontalScroll_verticalLineWidth, 0);
+        selectTxtColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtColor, Color.BLACK);
         typedArray.recycle();
     }
 
@@ -103,6 +122,9 @@ public class PHorizontalView extends ViewGroup {
         super.onFinishInflate();
         if (titles == null) return;
         LinearLayout linearLayout = new LinearLayout(mContext);
+        if (outDrawable != null) {
+            linearLayout.setBackgroundDrawable(outDrawable);
+        }
         linearLayout.setPadding(contentPaddingLeft, contentPaddingTop, contentPaddingRight, contentPaddingBottom);
         linearLayout.setWeightSum(titles.size());
         linearLayout.setBackgroundColor(bgColor);
@@ -113,6 +135,10 @@ public class PHorizontalView extends ViewGroup {
             TextView textView = new TextView(mContext);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
             textView.setText(titles.get(i));
+            if (i < titles.size() - 1) {
+                params.rightMargin = (int) verticalLineWidth;
+            }
+            textView.setPadding(titlePaddingLeft, titlePaddingTop, titlePaddingRight, titlePaddingBottom);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
             if (!canLines) {
                 textView.setMaxLines(1);
@@ -155,7 +181,7 @@ public class PHorizontalView extends ViewGroup {
         }
         LayoutParams paramsLine = null;
         if (mLineWidth == 0) {
-            paramsLine = new LayoutParams((int) w / 2, 10);
+            paramsLine = new LayoutParams((int) w/* / 2*/, 10);
         } else {
             paramsLine = new LayoutParams((int) mLineWidth, 10);
         }
@@ -169,10 +195,10 @@ public class PHorizontalView extends ViewGroup {
         textView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onPageChangeListener != null) {
+                if (onPageChangeListener != null && viewPager == null) {
                     onPageChangeListener.onSelected(i);
                 }
-                if (viewPager == null || viewPager.getChildCount() <= i) return;
+                if (viewPager == null || viewPager.getAdapter() == null || viewPager.getAdapter().getCount() <= i) return;
                 viewPager.setCurrentItem(i);
             }
         });
@@ -186,11 +212,11 @@ public class PHorizontalView extends ViewGroup {
         TextView textView = (TextView) linearLayout.getChildAt(0);
         bottom = textView.getBottom();
         RelativeLayout lineRl = (RelativeLayout) getChildAt(1);
-        lineRl.layout(0, bottom + contentPaddingBottom + indicatorMarginTop, lineRl.getMeasuredWidth(),
-                lineRl.getMeasuredHeight() + bottom + contentPaddingBottom + indicatorMarginTop);
-        TextView line = (TextView) lineRl.getChildAt(0);
-        int left = (textView.getMeasuredWidth() - line.getMeasuredWidth()) / 2;
         if (value == 0) {
+            lineRl.layout(0, bottom + contentPaddingBottom + indicatorMarginTop, lineRl.getMeasuredWidth(),
+                    lineRl.getMeasuredHeight() + bottom + contentPaddingBottom + indicatorMarginTop);
+            TextView line = (TextView) lineRl.getChildAt(0);
+            int left = (textView.getMeasuredWidth() - line.getMeasuredWidth()) / 2;
             line.layout(left + contentPaddingLeft,
                     0, (mLineWidth == 0 ? line.getMeasuredWidth() : mLineWidth) + left + contentPaddingLeft,
                     line.getMeasuredHeight());
@@ -209,7 +235,7 @@ public class PHorizontalView extends ViewGroup {
             public void onPageSelected(int i) {
                 changeLinePosition(i);
                 if (onPageChangeListener != null) {
-                    onPageChangeListener.onPageChange(i);
+                    onPageChangeListener.onSelected(i);
                 }
             }
 
@@ -242,7 +268,8 @@ public class PHorizontalView extends ViewGroup {
             for (int j = 0; j < widths.length; j++) {
                 lineWidth += widths[j];
             }
-            lineWidth /= 2;
+            //lineWidth /= 2;
+            lineWidth -= 5;
             int left = textView.getLeft();
             left += textView.getMeasuredWidth() / 2 - lineWidth / 2;
             if (getChildAt(1) instanceof RelativeLayout) {
@@ -285,9 +312,14 @@ public class PHorizontalView extends ViewGroup {
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             TextView textView = (TextView) linearLayout.getChildAt(i);
             if (i == position) {
-                textView.setTextColor(indicatorColor);
+                if (selectFontSize == 0){
+                    selectFontSize = fontSize;
+                }
+                textView.setTextSize(selectFontSize);
+                textView.setTextColor(selectTxtColor);
                 textView.setBackgroundColor(selectTxtBgColor);
             } else {
+                textView.setTextSize(fontSize);
                 textView.setBackgroundColor(normalTxtBgColor);
                 textView.setTextColor(txtColor);
             }
@@ -296,9 +328,7 @@ public class PHorizontalView extends ViewGroup {
     }
 
     public abstract static class OnPageChangeListener {
-        abstract void onPageChange(int position);
-
-        abstract void onSelected(int position);
+        public abstract void onSelected(int position);
     }
 
     public void setOnPageChangeListener(OnPageChangeListener listener) {

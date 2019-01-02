@@ -11,11 +11,19 @@
         <attr name="contentPaddingBottom" format="dimension"/>
         <attr name="contentPaddingLeft" format="dimension"/>
         <attr name="contentPaddingRight" format="dimension"/>
+        <attr name="titlePaddingTop" format="dimension"/>
+        <attr name="titlePaddingBottom" format="dimension"/>
+        <attr name="titlePaddingLeft" format="dimension"/>
+        <attr name="titlePaddingRight" format="dimension"/>
         <attr name="indicatorMarginTop" format="dimension"/>
         <attr name="separateContentAndIndicator" format="boolean"/>
         <attr name="indicatorParentColor" format="color"/>
         <attr name="selectTxtBgColor" format="color"/>
         <attr name="normalTxtBgColor" format="color"/>
         <attr name="goneIndicator" format="boolean"/>
+        <attr name="verticalLineWidth" format="dimension"/>
+        <attr name="outDrawable" format="reference"/>
+        <attr name="selectFontSize" format="float"/>
+        <attr name="selectTxtColor" format="color"/>
     </declare-styleable>
 </resources>
