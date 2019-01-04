@@ -25,5 +25,11 @@
         <attr name="outDrawable" format="reference"/>
         <attr name="selectFontSize" format="float"/>
         <attr name="selectTxtColor" format="color"/>
+        <attr name="indicatorWidth">
+            <enum name="sameOfTxt" value="1"/>
+            <enum name="halfOfTxt" value="2"/>
+        </attr>
+        <attr name="setIndicatorWidth" format="dimension"/>
+        <attr name="indicatorHeight" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -53,6 +54,10 @@ public class PHorizontalView extends ViewGroup {
     private Drawable outDrawable;
     private int selectTxtColor;
     private float selectFontSize;
+    private int indicatorWidthType;
+    private int sameOfTxt = 1,halfOfTxt = 2;
+    private int setIndicatorWidth;
+    private int indicatorHeight;
 
     public PHorizontalView(Context context) {
         this(context, null);
@@ -82,7 +87,6 @@ public class PHorizontalView extends ViewGroup {
         titlePaddingBottom = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingBottom, 0);
         titlePaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingLeft, 0);
         titlePaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingRight, 0);
-
         indicatorMarginTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_indicatorMarginTop, 0);
         separateContentAndIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_separateContentAndIndicator, false);
         indicatorParentColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_indicatorParentColor, Color.WHITE);
@@ -91,6 +95,9 @@ public class PHorizontalView extends ViewGroup {
         goneIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_goneIndicator, false);
         verticalLineWidth = typedArray.getDimension(R.styleable.CustomHorizontalScroll_verticalLineWidth, 0);
         selectTxtColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtColor, Color.BLACK);
+        indicatorWidthType = typedArray.getInteger(R.styleable.CustomHorizontalScroll_indicatorWidth,0);
+        setIndicatorWidth = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_setIndicatorWidth,0);
+        indicatorHeight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_indicatorHeight,10);
         typedArray.recycle();
     }
 
@@ -181,9 +188,17 @@ public class PHorizontalView extends ViewGroup {
         }
         LayoutParams paramsLine = null;
         if (mLineWidth == 0) {
-            paramsLine = new LayoutParams((int) w/* / 2*/, 10);
+            paramsLine = new LayoutParams((int) w/* / 2*/, indicatorHeight);
+            if (indicatorWidthType == sameOfTxt){
+                paramsLine = new LayoutParams((int) w, indicatorHeight);
+            } else if (indicatorWidthType == halfOfTxt){
+                paramsLine = new LayoutParams((int) w / 2, indicatorHeight);
+            }
         } else {
-            paramsLine = new LayoutParams((int) mLineWidth, 10);
+            paramsLine = new LayoutParams((int) mLineWidth, indicatorHeight);
+        }
+        if (setIndicatorWidth > 0){
+            paramsLine = new LayoutParams((int) setIndicatorWidth, indicatorHeight);//如果有设置indicator的宽度，则直接覆盖
         }
         line.setLayoutParams(paramsLine);
         relativeLayout.addView(line);
@@ -268,8 +283,14 @@ public class PHorizontalView extends ViewGroup {
             for (int j = 0; j < widths.length; j++) {
                 lineWidth += widths[j];
             }
-            //lineWidth /= 2;
-            lineWidth -= 5;
+            if (indicatorWidthType == sameOfTxt){
+                lineWidth -= 5;//稍微缩减5个像素
+            } else if (indicatorWidthType == halfOfTxt){
+                lineWidth /= 2;
+            }
+            if (setIndicatorWidth > 0){
+                lineWidth = setIndicatorWidth;//如果有设置indicator的宽度，则直接覆盖
+            }
             int left = textView.getLeft();
             left += textView.getMeasuredWidth() / 2 - lineWidth / 2;
             if (getChildAt(1) instanceof RelativeLayout) {
