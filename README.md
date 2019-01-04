@@ -1,7 +1,7 @@
 # PHorizontalView
 Android带有Indicator的滑动控件
 #### 效果图
-![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp.gif)  
+![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_1.gif)   
 #### 使用  
 ```
 <nelson.com.myhorizontal.PHorizontalView
