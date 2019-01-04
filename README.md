@@ -38,7 +38,12 @@ indicatorMarginTop 指示器上边距
 separateContentAndIndicator 是否可以设置指示器所在行的颜色
 indicatorParentColor 设置指示器所在行的颜色
 contentPaddingLeft 标题左边距
-selectTxtBgColor 选中时的标题颜色
-normalTxtBgColor 未选中时的标题颜色
+selectTxtBgColor 选中时的标题背景颜色
+normalTxtBgColor 未选中时的标题背景颜色
+selectFontSize 选中时标题大小
+selectTxtColor 选中时标题颜色
 goneIndicator 是否隐藏标题栏
+indicatorWidth （sameOfTxt 指示器的宽度跟标题宽度一样，halfOfTxt 指示器的宽度是标题宽度的一半）
+setIndicatorWidth 设置指示器的宽度
+indicatorHeight 设置指示器的高度
 ```
