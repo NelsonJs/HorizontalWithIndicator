@@ -1,4 +1,4 @@
-# PHorizontalView
+# HorizontalWithIndicator
 一个简单的带有Indicator的Android滑动控件
 #### 效果图
 
