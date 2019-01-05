@@ -5,7 +5,15 @@
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp.gif)
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_1.gif)
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_2.gif)
-#### 使用  
+
+#### gradle导入
+
+ implementation 'com.aioyoo:HorizontalWithIndicator:1.0.2'
+
+
+
+
+#### XML使用  
 ```
 <nelson.com.myhorizontal.PHorizontalView
         app:fontSize="14"
