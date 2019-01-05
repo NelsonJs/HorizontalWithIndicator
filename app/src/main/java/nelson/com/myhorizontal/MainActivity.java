@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import nelson.com.horizontallibrary.PHorizontalView;
+import nelson.com.horizontallibrary.HorizontalWithIndicator;
 
 public class MainActivity extends AppCompatActivity {
     List<String> data = new ArrayList<>();
@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
         list.add("Item-3");
         ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new A());
-        PHorizontalView pHorizontalView = findViewById(R.id.scro);
+        HorizontalWithIndicator pHorizontalView = findViewById(R.id.scro);
         pHorizontalView.bindTitles(list);
         pHorizontalView.bindVp(viewPager);
-        pHorizontalView.setOnPageChangeListener(new PHorizontalView.OnPageChangeListener() {
+        pHorizontalView.setOnPageChangeListener(new HorizontalWithIndicator.OnPageChangeListener() {
 
             @Override
             public void onSelected(int position) {

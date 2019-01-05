@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 28
 
@@ -32,12 +32,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
 
-publish {
-    userOrg = 'pengjiansong'//bintray.com用户名
-    repoName = "aioyoo" //bintray上常见的仓库的名字
-    groupId = 'com.aioyoo'//groupId一般为包名
-    artifactId = 'HorizontalWithIndicator'//artifactId 一般为项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'this is a horizontal scroll view'//描述，不重要
-    website = 'https://github.com/NelsonJs/HorizontalWithIndicator'//网站,一般是GitHub的项目地址，一定要是可以访问到的地址
-}
+
+

@@ -9,8 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,7 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class PHorizontalView extends ViewGroup {
+public class HorizontalWithIndicator extends ViewGroup {
     private Context mContext;
     private List<String> titles;
     private int bottom;
@@ -59,49 +57,49 @@ public class PHorizontalView extends ViewGroup {
     private int setIndicatorWidth;
     private int indicatorHeight;
 
-    public PHorizontalView(Context context) {
+    public HorizontalWithIndicator(Context context) {
         this(context, null);
     }
 
-    public PHorizontalView(Context context, AttributeSet attrs) {
+    public HorizontalWithIndicator(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public PHorizontalView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HorizontalWithIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomHorizontalScroll);
-        fontSize = typedArray.getFloat(R.styleable.CustomHorizontalScroll_fontSize, 14);
-        bgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_backGroundColor, Color.BLACK);
-        txtColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_textColor, Color.BLACK);
-        indicatorColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_indicatorColor, Color.BLACK);
-        canLines = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_canLines, false);
-        indicatorDrawable = typedArray.getDrawable(R.styleable.CustomHorizontalScroll_indicatorDrawable);
-        outDrawable = typedArray.getDrawable(R.styleable.CustomHorizontalScroll_outDrawable);
-        contentPaddingTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingTop, 0);
-        contentPaddingBottom = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingBottom, 0);
-        contentPaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingLeft, 0);
-        contentPaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_contentPaddingRight, 0);
-        selectFontSize = typedArray.getFloat(R.styleable.CustomHorizontalScroll_selectFontSize, 0);
-        titlePaddingTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingTop, 0);
-        titlePaddingBottom = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingBottom, 0);
-        titlePaddingLeft = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingLeft, 0);
-        titlePaddingRight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_titlePaddingRight, 0);
-        indicatorMarginTop = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_indicatorMarginTop, 0);
-        separateContentAndIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_separateContentAndIndicator, false);
-        indicatorParentColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_indicatorParentColor, Color.WHITE);
-        selectTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtBgColor, Color.WHITE);
-        normalTxtBgColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_normalTxtBgColor, Color.WHITE);
-        goneIndicator = typedArray.getBoolean(R.styleable.CustomHorizontalScroll_goneIndicator, false);
-        verticalLineWidth = typedArray.getDimension(R.styleable.CustomHorizontalScroll_verticalLineWidth, 0);
-        selectTxtColor = typedArray.getColor(R.styleable.CustomHorizontalScroll_selectTxtColor, Color.BLACK);
-        indicatorWidthType = typedArray.getInteger(R.styleable.CustomHorizontalScroll_indicatorWidth,0);
-        setIndicatorWidth = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_setIndicatorWidth,0);
-        indicatorHeight = (int) typedArray.getDimension(R.styleable.CustomHorizontalScroll_indicatorHeight,10);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HorizontalWithIndicator);
+        fontSize = typedArray.getDimension(R.styleable.HorizontalWithIndicator_fontSize, 14);
+        bgColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_backGroundColor, Color.BLACK);
+        txtColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_textColor, Color.BLACK);
+        indicatorColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_indicatorColor, Color.BLACK);
+        canLines = typedArray.getBoolean(R.styleable.HorizontalWithIndicator_canLines, false);
+        indicatorDrawable = typedArray.getDrawable(R.styleable.HorizontalWithIndicator_indicatorDrawable);
+        outDrawable = typedArray.getDrawable(R.styleable.HorizontalWithIndicator_outDrawable);
+        contentPaddingTop = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_contentPaddingTop, 0);
+        contentPaddingBottom = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_contentPaddingBottom, 0);
+        contentPaddingLeft = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_contentPaddingLeft, 0);
+        contentPaddingRight = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_contentPaddingRight, 0);
+        selectFontSize = typedArray.getDimension(R.styleable.HorizontalWithIndicator_selectFontSize, 0);
+        titlePaddingTop = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_titlePaddingTop, 0);
+        titlePaddingBottom = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_titlePaddingBottom, 0);
+        titlePaddingLeft = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_titlePaddingLeft, 0);
+        titlePaddingRight = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_titlePaddingRight, 0);
+        indicatorMarginTop = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_indicatorMarginTop, 0);
+        separateContentAndIndicator = typedArray.getBoolean(R.styleable.HorizontalWithIndicator_separateContentAndIndicator, false);
+        indicatorParentColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_indicatorParentColor, Color.WHITE);
+        selectTxtBgColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_selectTxtBgColor, Color.WHITE);
+        normalTxtBgColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_normalTxtBgColor, Color.WHITE);
+        goneIndicator = typedArray.getBoolean(R.styleable.HorizontalWithIndicator_goneIndicator, false);
+        verticalLineWidth = typedArray.getDimension(R.styleable.HorizontalWithIndicator_verticalLineWidth, 0);
+        selectTxtColor = typedArray.getColor(R.styleable.HorizontalWithIndicator_selectTxtColor, Color.BLACK);
+        indicatorWidthType = typedArray.getInteger(R.styleable.HorizontalWithIndicator_indicatorWidth,0);
+        setIndicatorWidth = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_setIndicatorWidth,0);
+        indicatorHeight = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_indicatorHeight,10);
         typedArray.recycle();
     }
 
-    public PHorizontalView bindTitles(List<String> titles) {
+    public HorizontalWithIndicator bindTitles(List<String> titles) {
         this.titles = titles;
         onFinishInflate();
         return this;
@@ -146,7 +144,7 @@ public class PHorizontalView extends ViewGroup {
                 params.rightMargin = (int) verticalLineWidth;
             }
             textView.setPadding(titlePaddingLeft, titlePaddingTop, titlePaddingRight, titlePaddingBottom);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, fontSize);
+            textView.getPaint().setTextSize(fontSize);
             if (!canLines) {
                 textView.setMaxLines(1);
                 textView.setEllipsize(TextUtils.TruncateAt.END);
@@ -336,11 +334,11 @@ public class PHorizontalView extends ViewGroup {
                 if (selectFontSize == 0){
                     selectFontSize = fontSize;
                 }
-                textView.setTextSize(selectFontSize);
+                textView.getPaint().setTextSize(selectFontSize);
                 textView.setTextColor(selectTxtColor);
                 textView.setBackgroundColor(selectTxtBgColor);
             } else {
-                textView.setTextSize(fontSize);
+                textView.getPaint().setTextSize(fontSize);
                 textView.setBackgroundColor(normalTxtBgColor);
                 textView.setTextColor(txtColor);
             }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomHorizontalScroll">
-        <attr name="fontSize" format="float"/>
+    <declare-styleable name="HorizontalWithIndicator">
+        <attr name="fontSize" format="dimension"/>
         <attr name="backGroundColor" format="color"/>
         <attr name="textColor" format="color"/>
         <attr name="indicatorColor" format="color"/>
@@ -23,7 +23,7 @@
         <attr name="goneIndicator" format="boolean"/>
         <attr name="verticalLineWidth" format="dimension"/>
         <attr name="outDrawable" format="reference"/>
-        <attr name="selectFontSize" format="float"/>
+        <attr name="selectFontSize" format="dimension"/>
         <attr name="selectTxtColor" format="color"/>
         <attr name="indicatorWidth">
             <enum name="sameOfTxt" value="1"/>

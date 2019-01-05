@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context=".MainActivity">
-    <nelson.com.horizontallibrary.PHorizontalView
+    <nelson.com.horizontallibrary.HorizontalWithIndicator
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
@@ -14,8 +14,8 @@
         app:indicatorWidth="halfOfTxt"
         app:indicatorHeight="20dp"
         app:setIndicatorWidth="40dp"
-        app:fontSize="13"
-        app:selectFontSize="15"
+        app:fontSize="13sp"
+        app:selectFontSize="15sp"
         app:textColor="@color/c_a9abad"
         app:selectTxtColor="@color/black"
         app:indicatorColor="@color/colorPrimaryDark"
