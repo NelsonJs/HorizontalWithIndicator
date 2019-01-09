@@ -8,7 +8,7 @@
 
 #### gradle导入
 
- implementation 'com.aioyoo:HorizontalWithIndicator:1.0.2-alpha-1'
+ implementation 'com.aioyoo:HorizontalWithIndicator:1.0.2-alpha-2'
 
 
 
