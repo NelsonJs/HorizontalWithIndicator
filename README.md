@@ -5,6 +5,7 @@
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp.gif)
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_1.gif)
 ![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_2.gif)
+![](https://github.com/NelsonJs/MyHorizontalWithIndicator/blob/master/temp_3.gif)
 
 #### gradle导入
 
