@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".MainActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/yaMa"
+            android:gravity="center"
+            android:onClick="raise"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="增加留言数量"/>
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:background="@color/green"
+            android:gravity="center"
+            android:onClick="down"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="删减留言数量"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
     <nelson.com.horizontallibrary.HorizontalWithIndicator
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
         app:indicatorWidth="halfOfTxt"
-        app:indicatorHeight="20dp"
-        app:setIndicatorWidth="40dp"
+        app:indicatorHeight="2dp"
         app:fontSize="13sp"
+        app:setIndicatorWidth="20dp"
+        app:outPaddingBottom="10dp"
+        app:outPaddingTop="10dp"
         app:selectFontSize="15sp"
         app:textColor="@color/c_a9abad"
         app:selectTxtColor="@color/black"
@@ -31,9 +60,9 @@
         android:id="@+id/scro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    </RelativeLayout>
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_below="@id/scro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-</RelativeLayout>
+</LinearLayout>

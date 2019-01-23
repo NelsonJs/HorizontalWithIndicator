@@ -31,5 +31,7 @@
         </attr>
         <attr name="setIndicatorWidth" format="dimension"/>
         <attr name="indicatorHeight" format="dimension"/>
+        <attr name="outPaddingBottom" format="dimension"/>
+        <attr name="outPaddingTop" format="dimension"/>
     </declare-styleable>
 </resources>

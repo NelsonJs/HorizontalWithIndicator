@@ -13,14 +13,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.List;
 
 
-public class HorizontalWithIndicator extends ViewGroup {
+public class HorizontalWithIndicator extends ViewGroup implements Serializable{
     private Context mContext;
     private List<String> titles;
     private int bottom;
@@ -56,6 +58,8 @@ public class HorizontalWithIndicator extends ViewGroup {
     private int sameOfTxt = 1,halfOfTxt = 2;
     private int setIndicatorWidth;
     private int indicatorHeight;
+    private int outPaddingBottom;
+    private int outPaddingTop;
 
     public HorizontalWithIndicator(Context context) {
         this(context, null);
@@ -96,6 +100,8 @@ public class HorizontalWithIndicator extends ViewGroup {
         indicatorWidthType = typedArray.getInteger(R.styleable.HorizontalWithIndicator_indicatorWidth,0);
         setIndicatorWidth = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_setIndicatorWidth,0);
         indicatorHeight = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_indicatorHeight,10);
+        outPaddingBottom = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_outPaddingBottom,0);
+        outPaddingTop = (int) typedArray.getDimension(R.styleable.HorizontalWithIndicator_outPaddingTop,0);
         typedArray.recycle();
     }
 
@@ -108,10 +114,13 @@ public class HorizontalWithIndicator extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        LinearLayout linearLayout = (LinearLayout) getChildAt(0);
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
         if (linearLayout == null) return;
-        measureChild(linearLayout, widthMeasureSpec, heightMeasureSpec);
-        if (goneIndicator) {
+        measureChild(outLl, widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(outLl.getMeasuredWidth(),
+                outLl.getMeasuredHeight()+outPaddingBottom+outPaddingTop);
+        /*if (goneIndicator) {
             setMeasuredDimension(linearLayout.getMeasuredWidth(),
                     linearLayout.getMeasuredHeight());
         } else {
@@ -119,17 +128,23 @@ public class HorizontalWithIndicator extends ViewGroup {
             measureChild(lineRl, widthMeasureSpec, heightMeasureSpec);
             setMeasuredDimension(linearLayout.getMeasuredWidth(),
                     linearLayout.getMeasuredHeight() + lineRl.getMeasuredHeight() + indicatorMarginTop);
-        }
+        }*/
     }
 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (titles == null) return;
-        LinearLayout linearLayout = new LinearLayout(mContext);
+        LinearLayout outLl = new LinearLayout(mContext);
+        outLl.setPadding(0,outPaddingTop,0,outPaddingBottom);
+        outLl.setOrientation(LinearLayout.VERTICAL);
+        MarginLayoutParams paramsOutLl = new MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        outLl.setLayoutParams(paramsOutLl);
         if (outDrawable != null) {
-            linearLayout.setBackgroundDrawable(outDrawable);
+            outLl.setBackgroundDrawable(outDrawable);
         }
+        addView(outLl);
+        LinearLayout linearLayout = new LinearLayout(mContext);
         linearLayout.setPadding(contentPaddingLeft, contentPaddingTop, contentPaddingRight, contentPaddingBottom);
         linearLayout.setWeightSum(titles.size());
         linearLayout.setBackgroundColor(bgColor);
@@ -156,8 +171,8 @@ public class HorizontalWithIndicator extends ViewGroup {
             linearLayout.addView(textView);
             initTvListener(textView, i);
         }
-        addView(linearLayout);
-
+        //addView(linearLayout);
+        outLl.addView(linearLayout);
         RelativeLayout relativeLayout = new RelativeLayout(mContext);
         if (separateContentAndIndicator) {
             if (indicatorParentColor != 0) {
@@ -200,9 +215,11 @@ public class HorizontalWithIndicator extends ViewGroup {
         }
         line.setLayoutParams(paramsLine);
         relativeLayout.addView(line);
-        addView(relativeLayout);
+        //addView(relativeLayout);
+        outLl.addView(relativeLayout);
         updateTextView(0);
     }
+
 
     private void initTvListener(TextView textView, final int i) {
         textView.setOnClickListener(new OnClickListener() {
@@ -219,20 +236,47 @@ public class HorizontalWithIndicator extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        LinearLayout linearLayout = (LinearLayout) getChildAt(0);
-        if (linearLayout == null) return;
-        linearLayout.layout(0, 0, linearLayout.getMeasuredWidth(), linearLayout.getMeasuredHeight());
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        if (outLl == null) return;
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
+        outLl.layout(0, outPaddingTop, outLl.getMeasuredWidth(), outLl.getMeasuredHeight()+outPaddingBottom);
         TextView textView = (TextView) linearLayout.getChildAt(0);
         bottom = textView.getBottom();
-        RelativeLayout lineRl = (RelativeLayout) getChildAt(1);
+        RelativeLayout lineRl = (RelativeLayout) outLl.getChildAt(1);
+        TextView line = (TextView) lineRl.getChildAt(0);
         if (value == 0) {
-            lineRl.layout(0, bottom + contentPaddingBottom + indicatorMarginTop, lineRl.getMeasuredWidth(),
-                    lineRl.getMeasuredHeight() + bottom + contentPaddingBottom + indicatorMarginTop);
-            TextView line = (TextView) lineRl.getChildAt(0);
+            /*lineRl.layout(0, (int) (bottom + contentPaddingBottom + indicatorMarginTop+outLl.getTop()), lineRl.getMeasuredWidth(),
+                    lineRl.getMeasuredHeight() + bottom + contentPaddingBottom + indicatorMarginTop);*/
             int left = (textView.getMeasuredWidth() - line.getMeasuredWidth()) / 2;
             line.layout(left + contentPaddingLeft,
                     0, (mLineWidth == 0 ? line.getMeasuredWidth() : mLineWidth) + left + contentPaddingLeft,
                     line.getMeasuredHeight());
+        } else {
+            line.layout(value, 0, mLineWidth + value, line.getMeasuredHeight());
+        }
+    }
+
+    public TextView getTitleView(int position){
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        if (outLl == null) return null;
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
+        if (position < linearLayout.getChildCount()){
+            TextView textView = (TextView) linearLayout.getChildAt(position);
+            return textView;
+        }
+        return null;
+    }
+
+    public void setTitle(int position,String title){
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        if (outLl == null) return ;
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
+        if (position < linearLayout.getChildCount()){
+            TextView textView = (TextView) linearLayout.getChildAt(position);
+            if (title != null){
+                textView.setText(title);
+                changeLinePosition(position);
+            }
         }
     }
 
@@ -262,7 +306,8 @@ public class HorizontalWithIndicator extends ViewGroup {
     private float lineWidth;
 
     public void changeLinePosition(int i) {
-        LinearLayout linearLayout = (LinearLayout) getChildAt(0);
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
         if (i >= linearLayout.getChildCount()) {
             return;
         }
@@ -291,12 +336,12 @@ public class HorizontalWithIndicator extends ViewGroup {
             }
             int left = textView.getLeft();
             left += textView.getMeasuredWidth() / 2 - lineWidth / 2;
-            if (getChildAt(1) instanceof RelativeLayout) {
+            if (outLl.getChildAt(1) instanceof RelativeLayout) {
 
             } else {
                 return;
             }
-            RelativeLayout lineRl = (RelativeLayout) getChildAt(1);
+            RelativeLayout lineRl = (RelativeLayout) outLl.getChildAt(1);
             final TextView line = (TextView) lineRl.getChildAt(0);
             int lineLeft = line.getLeft();
             int start = lineLeft;
@@ -327,7 +372,8 @@ public class HorizontalWithIndicator extends ViewGroup {
     }
 
     private void updateTextView(int position) {
-        LinearLayout linearLayout = (LinearLayout) getChildAt(0);
+        LinearLayout outLl = (LinearLayout) getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) outLl.getChildAt(0);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             TextView textView = (TextView) linearLayout.getChildAt(i);
             if (i == position) {
